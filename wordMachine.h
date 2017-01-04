@@ -17,6 +17,7 @@ private:
 	clock_t stopTime;   // End time of typing test
 	int curPos;	        // Index of current word
 	void resetCurPos(); // Resets current word index to zero
+	int wordCountTotal;		// The total number of words user is tested on
 
 public:
 	WordMachine();
