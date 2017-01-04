@@ -20,6 +20,7 @@ WordMachine::WordMachine(){
 	startTime = 0;
 	stopTime = 0;
 	curPos = 0;
+	wordCountTotal = 0;
 }
 
 WordMachine::~WordMachine(){}
