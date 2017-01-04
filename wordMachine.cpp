@@ -1,5 +1,11 @@
 #include "wordMachine.h"
+#include <sstream>
+#include <ostream>
+#include <iostream>
+
+using std::ostringstream;
 using std::string;
+using std::cout;
 
 /* Frank Mock, January 2017
 * WordMachine is a class that represents the state
@@ -20,7 +26,10 @@ WordMachine::WordMachine(){
 	startTime = 0;
 	stopTime = 0;
 	curPos = 0;
-	wordCountTotal = 0;
+	wordCountTotal = this->getWordCount(phrases);
+
+
+	cout << this->to_string(); /*** For troubleshooting. Delete when finished ***/
 }
 
 WordMachine::~WordMachine(){}
@@ -64,4 +73,18 @@ float WordMachine::getTime(){
  * word in the vector of word phrases */
 void WordMachine::resetCurPos(){
 	curPos = 0;
+}
+
+/* Determines the number of words in a vector of strings
+ * and returns that number*/
+int WordMachine::getWordCount(std::vector<std::string> words){
+	// < TO DO >
+	return 0; // Not finished
+}
+
+// String representation of a WordMachine object
+string WordMachine::to_string() const{
+	ostringstream result;
+	result << "WordMachine: wordCountTotal is " << wordCountTotal;
+	return result.str();
 }

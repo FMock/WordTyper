@@ -18,10 +18,12 @@ private:
 	int curPos;	        // Index of current word
 	void resetCurPos(); // Resets current word index to zero
 	int wordCountTotal;		// The total number of words user is tested on
+	int getWordCount(std::vector<std::string> words); // Determines number of words is words
 
 public:
 	WordMachine();
 	~WordMachine();
+	std::string to_string() const; // string representing state of WordMachine
 	std::string getWord(); // Returns currnt word
 	void setStartTime();   // Sets the start time to current time
 	void setStopTime();    // Sets the stop time to the current time
