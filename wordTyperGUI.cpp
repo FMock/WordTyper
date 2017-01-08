@@ -31,7 +31,7 @@ WordTyperGUI::WordTyperGUI(int w, int h, const char* title) :Fl_Window(w, h, tit
 	int ypos = 150;
 
 	// A Message box to display messages to the user
-	msgBox = new Fl_Multiline_Output(0, 50, 600, 75, "");
+	msgBox = new Fl_Multiline_Output(0, 50, 600, 85, "");
 	msgBox->color(0xc2c200);
 	msgBox->textfont(FL_HELVETICA);
 	msgBox->textsize(24);
@@ -39,7 +39,7 @@ WordTyperGUI::WordTyperGUI(int w, int h, const char* title) :Fl_Window(w, h, tit
 
 
 	// Outputs the words/phrases to the user
-	output = new Fl_Output(0, ypos, 600, 32, "&output");
+	output = new Fl_Output(0, ypos, 600, 42, "&output");
 	output->color(0xc2c200);
 	output->value("Word phrase will appear here");
 	output->tooltip("Words or phrases will appear here");
@@ -48,7 +48,7 @@ WordTyperGUI::WordTyperGUI(int w, int h, const char* title) :Fl_Window(w, h, tit
 
 	ypos += 100;
 
-	input = new Fl_Text_Editor(0, ypos, 600, 200, "");
+	input = new Fl_Text_Editor(0, ypos, 600, 210, "");
 	input->textfont(FL_HELVETICA);
 	input->textsize(24);
 	input->tooltip("Word phrases appear here. Press enter after each phrase.");
@@ -68,13 +68,13 @@ WordTyperGUI::WordTyperGUI(int w, int h, const char* title) :Fl_Window(w, h, tit
 	// This means, when created their starting x-position and y-position are
 	// the same as the Fl_Text_Editor
 	int xpos = 200;
-	startBtn = new Fl_Button(xpos + 300, ypos + 220, 30, 30, "@>");
+	startBtn = new Fl_Button(xpos + 300, ypos + 225, 30, 30, "@>");
 	startBtn->callback((Fl_Callback*)startBtn_CB, this);
 
 	// Press CTRL-B to Begin
 	startBtn->shortcut(FL_CTRL + 'b');
 
-	stopBtn = new Fl_Button(xpos + 350, ypos + 220, 30, 30, "@square");
+	stopBtn = new Fl_Button(xpos + 350, ypos + 225, 30, 30, "@square");
 	stopBtn->callback((Fl_Callback*)stopBtn_CB, this);
 	// Press CTRL-S to Stop
 	stopBtn->shortcut(FL_CTRL + 's');
@@ -157,6 +157,12 @@ void WordTyperGUI::stopBtn_CB(Fl_Widget* w, void* v){
 	e->typerIsRunning = false;
 	// Get the results and display to user
 	e->getElapsedTime();
+
+	// Analyze what user typed and get results
+	std::string s = e->wm->getTestResults(e->buff);
+
+	// output results to message textbox
+	e->msgBox->value(s.c_str());
 }
 
 
@@ -184,8 +190,15 @@ void WordTyperGUI::timerEvent(void* v){
 			Fl::add_timeout(TIMER_TIMEOUT, timerEvent, e);
 		}
 		else{
+
 			e->typerIsRunning = false;
 			e->getElapsedTime();
+
+			// Analyze what user typed and get results
+			std::string s = e->wm->getTestResults(e->buff);
+
+			// output results to message textbox
+			e->msgBox->value(s.c_str());
 		}
 	}
 }
